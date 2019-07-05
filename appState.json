@@ -1,0 +1,251 @@
+{
+  "EDITOR_STATE": {
+    "allProjectFiles": {
+      "bad92591-dc99-4e90-9ce2-1873b3082f7d": {
+        "id": "bad92591-dc99-4e90-9ce2-1873b3082f7d",
+        "parent": null,
+        "name": "indunilmix",
+        "type": "DIRECTORY",
+        "isDirectory": true,
+        "children": [
+          "e625f01f-d2b8-47b3-a225-97e7f0ea8927"
+        ],
+        "isRemovable": false,
+        "filePath": "indunilmix"
+      },
+      "e625f01f-d2b8-47b3-a225-97e7f0ea8927": {
+        "id": "e625f01f-d2b8-47b3-a225-97e7f0ea8927",
+        "parent": "bad92591-dc99-4e90-9ce2-1873b3082f7d",
+        "name": "lambda.js",
+        "type": "JS_LAMBDA",
+        "isDirectory": false,
+        "children": [],
+        "isRemovable": true,
+        "filePath": "indunilmix/lambda.js",
+        "code": "let AWS = require('aws-sdk');\nlet SL_AWS = require('slappforge-sdk-aws');\nconst sqs = new SL_AWS.SQS(AWS);\n\nexports.handler = function (event, context, callback) {\n\n\n    sqs.sendMessage({\n        MessageBody: 'SQS check',\n        QueueUrl: `https://sqs.${process.env.AWS_REGION}.amazonaws.com/${process.env.SIGMA_AWS_ACC_ID}/Hiru1T`,\n        DelaySeconds: '0',\n        MessageDeduplicationId: '123',\n        MessageGroupId: '142',\n        MessageAttributes: {\n            \"@a\": {\n                \"DataType\": \"String\",\n                \"StringValue\": \"1\"\n            }\n        }\n    }, function (data) {\n        console.log(\"success - S3\" + { data });\n        callback(null, \"Successfully executed to enduser data\" + { data });\n        // your logic (logging etc) to handle successful message delivery, should be here\n\n    }, function (error) {\n        // your logic (logging etc) to handle failures, should be here\n        console.log(\"error - S3\" + { err });\n        callback(null, \"Successfully executed to enduser catch\" + { err });\n    });\n\n    callback(null, { \"message\": \"Successfully executed\" });\n}",
+        "config": {
+          "runtime": "nodejs8.10",
+          "handler": "handler",
+          "timeout": 60,
+          "memory": 128,
+          "layers": []
+        },
+        "triggers": [
+          {
+            "resourceName": "s3indunils3",
+            "config": {
+              "type": "s3:ObjectCreated:Put",
+              "keyPrefix": "",
+              "keySuffix": ""
+            }
+          },
+          {
+            "resourceName": "apigusEast1TestAPIhiruindunilsnsget",
+            "config": {}
+          }
+        ]
+      }
+    },
+    "deletedFiles": [],
+    "rootNode": "bad92591-dc99-4e90-9ce2-1873b3082f7d",
+    "openFiles": [
+      "e625f01f-d2b8-47b3-a225-97e7f0ea8927"
+    ],
+    "currentFileId": "e625f01f-d2b8-47b3-a225-97e7f0ea8927",
+    "resources": {
+      "s3indunil": {
+        "name": "s3indunil",
+        "type": "S3",
+        "config": {
+          "mode": 0,
+          "bucket": {
+            "region": "us-east-1",
+            "name": "indunil"
+          }
+        }
+      },
+      "s3indunil1": {
+        "name": "s3indunil1",
+        "type": "S3",
+        "config": {
+          "mode": 1,
+          "bucket": {
+            "region": "us-east-1",
+            "name": "indunil1"
+          }
+        }
+      },
+      "sqsIndunilSQSfifo": {
+        "name": "sqsIndunilSQSfifo",
+        "type": "SQS",
+        "config": {
+          "mode": 0,
+          "existing": false,
+          "name": "IndunilSQS.fifo",
+          "url": "https://sqs.us-east-1.amazonaws.com/318300609668/IndunilSQS.fifo",
+          "selectedRegion": "us-east-1",
+          "deliveryDelay": 0,
+          "deliveryDelayUnit": "seconds",
+          "useRedrivePolicy": false,
+          "useSSE": false,
+          "kmsCustomerMasterKey": "default",
+          "accountId": "318300609668",
+          "dataKeyReusePeriod": 5,
+          "queueType": "fifoQueue",
+          "defaultVisibilityTimeout": 30,
+          "defaultVisibilityTimeoutUnit": "seconds",
+          "messageRetentionPeriod": 4,
+          "messageRetentionPeriodUnit": "days",
+          "maximumMessageSize": 256,
+          "receiveMessageWaitTime": 0,
+          "deadLetterQueueName": "",
+          "createdByApp": true
+        }
+      },
+      "sqsindunilLIFO": {
+        "name": "sqsindunilLIFO",
+        "type": "SQS",
+        "config": {
+          "mode": 0,
+          "existing": true,
+          "name": "indunilLIFO",
+          "url": "https://sqs.us-east-1.amazonaws.com/318300609668/indunilLIFO",
+          "selectedRegion": "us-east-1",
+          "deliveryDelay": 0,
+          "deliveryDelayUnit": "seconds",
+          "useRedrivePolicy": false,
+          "useSSE": false,
+          "kmsCustomerMasterKey": "default",
+          "accountId": "318300609668",
+          "dataKeyReusePeriod": 5,
+          "queueType": "standardQueue",
+          "defaultVisibilityTimeout": 30,
+          "defaultVisibilityTimeoutUnit": "seconds",
+          "messageRetentionPeriod": 4,
+          "messageRetentionPeriodUnit": "days",
+          "maximumMessageSize": 256,
+          "receiveMessageWaitTime": 0,
+          "deadLetterQueueName": "",
+          "createdByApp": true
+        }
+      },
+      "s3indunils3": {
+        "name": "s3indunils3",
+        "type": "S3",
+        "config": {
+          "mode": 0,
+          "bucket": {
+            "region": "us-east-1",
+            "name": "indunils3"
+          }
+        }
+      },
+      "sqsHiru1T": {
+        "name": "sqsHiru1T",
+        "type": "SQS",
+        "config": {
+          "mode": 0,
+          "existing": false,
+          "name": "Hiru1T",
+          "url": "https://sqs.us-east-1.amazonaws.com/318300609668/Hiru1T",
+          "selectedRegion": "us-east-1",
+          "deliveryDelay": 0,
+          "deliveryDelayUnit": "seconds",
+          "useRedrivePolicy": false,
+          "useSSE": false,
+          "kmsCustomerMasterKey": "default",
+          "accountId": "318300609668",
+          "dataKeyReusePeriod": 5,
+          "queueType": "standardQueue",
+          "defaultVisibilityTimeout": "60",
+          "defaultVisibilityTimeoutUnit": "seconds",
+          "messageRetentionPeriod": 4,
+          "messageRetentionPeriodUnit": "days",
+          "maximumMessageSize": 256,
+          "receiveMessageWaitTime": 0,
+          "deadLetterQueueName": ""
+        }
+      },
+      "apigusEast1TestAPIhiruindunilsnsget": {
+        "name": "apigusEast1TestAPIhiruindunilsnsget",
+        "type": "API_GATEWAY",
+        "config": {
+          "selectedRegion": "us-east-1",
+          "apiMode": 1,
+          "apiName": "TestAPI",
+          "apiId": "0itznun7w3",
+          "endpointType": "EDGE",
+          "rootResourceId": "h2lelj6j7k",
+          "existingResources": {
+            "/hiru/test": "2b8zt0",
+            "/hiru": "3nc52b",
+            "/hiru/sample": "4226gg",
+            "/MyLambda": "98nqbj",
+            "/": "h2lelj6j7k",
+            "/testtwospeciallambda": "q4szm3",
+            "/testtwospecialkumutest": "wey3lk",
+            "/hiru/snscheck": "wok1ku"
+          },
+          "resourceMode": 0,
+          "resourceName": "hiru/indunilsns",
+          "resourcePath": "/hiru/indunilsns",
+          "restMethod": "GET",
+          "proxyIntegration": false,
+          "enableCORS": false,
+          "stageMode": 1,
+          "stageName": "Test",
+          "stageDeploymentId": "0v1kzw",
+          "mode": 1
+        }
+      }
+    },
+    "customTemplate": {
+      "dialect": null,
+      "definitions": {}
+    },
+    "envVariables": [
+      {
+        "lambdaId": "all",
+        "varKey": "SIGMA_AWS_ACC_ID",
+        "varValue": null,
+        "shouldPersist": false,
+        "displayOnly": false,
+        "editable": false
+      }
+    ],
+    "packageJSON": {
+      "dependencies": {
+        "aws-sdk": {
+          "name": "aws-sdk",
+          "language": "javascript",
+          "version": "2.176.0",
+          "dev": true,
+          "notRemovable": false
+        },
+        "slappforge-sdk-aws": {
+          "name": "slappforge-sdk-aws",
+          "language": "javascript",
+          "version": "0.0.5",
+          "dev": false,
+          "notRemovable": false
+        }
+      }
+    }
+  },
+  "PROJECT_META": {
+    "projectName": "indunilmix",
+    "projectDescription": "1111",
+    "projectVersion": "1.0.0",
+    "projectRegion": "us-east-1",
+    "platform": "AWS",
+    "platformRegions": {},
+    "lastSave": 1562307839587
+  },
+  "VCS_STATE": {
+    "provider": "GitHub",
+    "repo": {
+      "name": "indunilmix",
+      "url": "https://github.com/HirudineeADRT/indunilmix"
+    }
+  }
+}
